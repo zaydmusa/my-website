@@ -1,64 +1,352 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-<link href='https://fonts.googleapis.com/css?family=EB Garamond' rel='stylesheet'>
-  <style>
-    h1, h2, h3 {text-align: center; font-family: 'EB Garamond', sans-serif;}
-    body, p, a {text-align: center; font-family: Avenir, sans-serif;}
-    li {text-align: center; font-family: Avenir, sans-serif; list-style-position: inside; display: flex; align-items: center; justify-content: center;}
-    ul {padding = 0; list-style-type: = "none";}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zayd Musa</title>
+    <link rel="icon" type="image/x-icon" href="Images/Favicon.ico">
+    <link rel="apple-touch-icon" sizes="300x300" type="image/png" href="Images/Favicon.png">
+    <link href='https://fonts.googleapis.com/css?family=EB+Garamond:400,500,600,700&display=swap' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap' rel='stylesheet'>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <title>Zayd Musa</title>
-  <link rel="icon" type="image/x-icon" href="Images/Favicon.ico">
-  <link rel="apple-touch-icon" sizes="300x300" type="image/png" href="Images/Favicon.png">
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 300% 100%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        h1, h2, h3 {
+            font-family: 'EB Garamond', serif;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .headshot {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            margin: 2rem auto;
+            display: block;
+            border: 6px solid transparent;
+            background: linear-gradient(45deg, #667eea, #764ba2) border-box;
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .headshot:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .intro-text {
+            font-size: 1.2rem;
+            color: #34495e;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        li {
+            background: rgba(255, 255, 255, 0.7);
+            margin: 0.8rem 0;
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            border-left: 4px solid transparent;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), 
+                              linear-gradient(45deg, #667eea, #764ba2);
+            background-origin: border-box;
+            background-clip: content-box, border-box;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        li:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+            background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                              linear-gradient(45deg, #667eea, #764ba2);
+        }
+
+        a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #764ba2;
+        }
+
+        .logo-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-left: 12px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-img:hover {
+            transform: scale(1.2);
+        }
+
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 2px solid rgba(102, 126, 234, 0.1);
+            text-align: center;
+        }
+
+        footer h3 {
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        footer p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        footer a {
+            display: inline-block;
+            margin: 0 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        footer a:hover {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .headshot {
+                width: 220px;
+                height: 220px;
+            }
+            
+            .intro-text {
+                font-size: 1.1rem;
+            }
+            
+            li {
+                padding: 0.8rem 1rem;
+                font-size: 1rem;
+            }
+            
+            li:hover {
+                transform: translateX(5px);
+            }
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .circle-1 {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .circle-2 {
+            width: 60px;
+            height: 60px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .circle-3 {
+            width: 40px;
+            height: 40px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
 </head>
 
 <body>
-  <h1>Hey, my name is Zayd!</h1>
-  <img src="Images/Headshot.JPG" alt="Headshot of me!" style="width:250px;height:250px; border-radius: 50%;">
-  <p>I'm from Cupertino, CA and go to UC Davis (go Ags!), <br> studying Computer Science and Economics, with minors in Sustainability and History + pursuing a certificate of Entrepreneurship.</p>
+    <div class="floating-elements">
+        <div class="floating-circle circle-1"></div>
+        <div class="floating-circle circle-2"></div>
+        <div class="floating-circle circle-3"></div>
+    </div>
 
-  <h3>In my free time I like to...</h3>
-  <ul>
-    <li>Hike 🏞️</li>
-    <li>Cook & try new food 🥘</li>
-    <li>Travel/explore 🌍</li>
-    <li>Go to the gym 🏋 & swim 🏊‍♂️</li>
-    <li>Watch good movies & TV 🎬</li>
-    <li>Read books & articles 📚, listen to&nbsp;<a href="https://open.spotify.com/user/21czl2rhkkxbbmifrgestphey">music</a> 🎶</li>
-    <li>Play with my cat 😸</li>
-    <li>Hang out with my friends! 👥</li>
-    <li>Build legos 🏙️, play Pokémon 🎮, & garden 🪴</li>
-    <li>I also want to get more into horse riding 🏇 & learn to fly! ✈️</li>
-  </ul>
+    <div class="container">
+        <div class="profile-section">
+            <h1>Hey, my name is Zayd!</h1>
+            <img src="Images/Headshot.JPG" alt="Headshot of me!" class="headshot">
+            <p class="intro-text">I'm from Cupertino, CA and go to UC Davis (go Ags!), <br> studying Computer Science and Economics, with minors in Sustainability and History.</p>
+        </div>
 
-  <h3>I also like developing! 💻 Recently I've worked on...</h3>
-  <ul>
-    <li>An AI-powered medical bill negotiation service (PM intern) <a href="https://www.dorsal.fyi"><img src="Images/Dorsal.JPG" alt="Dorsal.fyi logo" style="width:25;height:25px; border-radius: 50%; margin-left: 10px;"></a></li>
-    <li>A neural network in python using only NumPy<a href="https://github.com/zaydmusa/Neural-Net"><img src="Images/Github.PNG" alt="Github logo" style="width:25;height:25px; border-radius: 50%; margin-left: 10px;"></a></li>
-    <li>A prototype of an AI-powered, student-centric housing search service<a href="https://www.figma.com/proto/2Mpd4uDIiq18kMgKXMiWyk/team-1-design?node-id=0-1&t=joiTOCJUZM8KwVTE-1"><img src="Images/Figma.JPG" alt="Figma logo" style="width:25;height:25px; border-radius: 50%; margin-left: 10px;"></a></li>
-  </ul>
+        <div class="section">
+            <h3>In my free time I like to...</h3>
+            <ul>
+                <li>Hike 🏞️</li>
+                <li>Cook & try new food 🥘</li>
+                <li>Travel/explore 🌍</li>
+                <li>Go to the gym 🏋 & swim 🏊‍♂️</li>
+                <li>Watch good movies & TV 🎬</li>
+                <li>Read books & articles 📚, listen to&nbsp;<a href="https://open.spotify.com/user/21czl2rhkkxbbmifrgestphey">music</a> 🎶</li>
+                <li>Play with my cat 😸</li>
+                <li>Hang out with my friends! 👥</li>
+                <li>Build legos 🏙️, play Pokémon 🎮, & garden 🪴</li>
+                <li>I also want to get more into horse riding 🏇 & learn to fly! ✈️</li>
+            </ul>
+        </div>
 
-  <h3>On campus, I'm involved with...</h3>
-  <ul>
-    <li>The Davis Consulting Group<a href="https://www.davisconsultinggroup.org"><img src="Images/DCG.JPG" alt="DCG logo" style="width:25;height:25px; border-radius: 50%; margin-left: 10px;"></a></li>
-    <li>Product Space @ UC Davis<a href="https://www.davisproductspace.org"><img src="Images/ProductSpace.JPG" alt="PS logo" style="width:25;height:25px; border-radius: 50%; margin-left: 10px;"></a></li>
-    <li>The Bengali Student Association<a href="https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.instagram.com/bsaatdavis/%3Fhl%3Den&ved=2ahUKEwj1z-OzstONAxW8IjQIHX4_LMcQFnoECA0QAQ&usg=AOvVaw3eIP4vjd2nIXX_JK_w84wn"><img src="Images/BSA.JPG" alt="BSA logo" style="width:25;height:25px; border-radius: 50%; margin-left: 10px;"></a></li>
-  </ul>
+        <div class="section">
+            <h3>I also like developing! 💻 Recently I've worked on...</h3>
+            <ul>
+                <li>An AI-powered medical bill negotiation service (PM intern) <a href="https://www.dorsal.fyi"><img src="Images/Dorsal.JPG" alt="Dorsal.fyi logo" class="logo-img"></a></li>
+                <li>A neural network in python using only NumPy<a href="https://github.com/zaydmusa/Neural-Net"><img src="Images/Github.PNG" alt="Github logo" class="logo-img"></a></li>
+                <li>A prototype of an AI-powered, student-centric housing search service<a href="https://www.figma.com/proto/2Mpd4uDIiq18kMgKXMiWyk/team-1-design?node-id=0-1&t=joiTOCJUZM8KwVTE-1"><img src="Images/Figma.JPG" alt="Figma logo" class="logo-img"></a></li>
+            </ul>
+        </div>
 
+        <div class="section">
+            <h3>On campus, I'm involved with...</h3>
+            <ul>
+                <li>The Davis Consulting Group<a href="https://www.davisconsultinggroup.org"><img src="Images/DCG.JPG" alt="DCG logo" class="logo-img"></a></li>
+                <li>Product Space @ UC Davis<a href="https://www.davisproductspace.org"><img src="Images/ProductSpace.JPG" alt="PS logo" class="logo-img"></a></li>
+                <li>The Bengali Student Association<a href="https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.instagram.com/bsaatdavis/%3Fhl%3Den&ved=2ahUKEwj1z-OzstONAxW8IjQIHX4_LMcQFnoECA0QAQ&usg=AOvVaw3eIP4vjd2nIXX_JK_w84wn"><img src="Images/BSA.JPG" alt="BSA logo" class="logo-img"></a></li>
+            </ul>
+        </div>
+
+        <footer>
+            <h3>See what I'm up to on...</h3>
+            <p>
+                <a href="https://www.linkedin.com/in/zayd-musa/">LinkedIn</a>
+                <a href="https://github.com/zaydmusa">GitHub</a>
+                <a href="https://www.x.com/zaydmusa">X</a>
+                <a href="https://www.instagram.com/zayd.musa/">Instagram</a>
+                <a href="mailto:zaydmusa.zm@gmail.com">Email me!</a>
+            </p>
+        </footer>
+    </div>
 </body>
-
-<footer>
-    <h3>See what I'm up to on...</h3>
-    <p>
-      <a href="https://www.linkedin.com/in/zayd-musa/">LinkedIn</a> | 
-      <a href="https://github.com/zaydmusa">GitHub</a> | 
-      <a href="https://www.x.com/zaydmusa">X</a> | 
-      <a href="https://www.instagram.com/zayd.musa/">Instagram</a>
-      or... <a href="mailto:zaydmusa.zm@gmail.com">Email me!</a>
-    </p>
-</footer>
-
 </html>

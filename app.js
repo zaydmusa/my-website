@@ -68,8 +68,8 @@ const TILES = [
     d: "A Davis startup building a student-only marketplace for services. Shaped launch features and go-to-market, modeled on student campaigns that had already worked.",
     sl: "first users", chips: ["Go-to-market", "Growth", "Startup"] },
   { id: "prodcon", t: "build", k: "2 days", l: "ProdCon", title: "ProdCon", role: "Lead organizer for 2027, Product Space", meta: "Davis, CA · Feb 2026, next in Feb 2027", when: "Feb 2026 – now",
-    d: "Product Space's two-day hackathon. The February 2026 edition brought in 200+ people, with cash prizes and judges and workshops from OpenAI and industry speakers. I helped out on that one; as President I'm now leading the planning for February 2027.",
-    sl: "200+ attendees in 2026", chips: ["Hackathon", "Logistics", "Partnerships"] },
+    d: "Product Space's two-day hackathon. The February 2026 edition brought in 200+ people, with cash prizes and judges and workshops from OpenAI and industry speakers. I helped out on that one, which ran with two other student organizations. As President I'm now leading the planning for February 2027 and have grown it to five partner organizations.",
+    sl: "200+ attendees in 2026; partner orgs up from 2 to 5 for 2027", chips: ["Hackathon", "Logistics", "Partnerships"] },
   { id: "prizmich", t: "finance", k: "M&A", l: "Lori Prizmich", title: "Lori Prizmich & Associates", role: "Consultant, Davis Consulting Group", meta: "Jan – Mar 2026", when: "Jan – Mar 2026",
     d: "Supported an M&A transaction for a real estate firm: valued the business from comparable transactions and its own financials, modeled a deal structure, and managed competing interests between the parties.",
     sl: "valuation and deal modeling", chips: ["Valuation", "Comps", "Deal structure"] }

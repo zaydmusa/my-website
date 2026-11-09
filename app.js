@@ -1,363 +1,163 @@
-/* ============================================
-   ZAYD MUSA PERSONAL WEBSITE - JAVASCRIPT
-   Interactive features and animations
-   ============================================ */
+// Everything on the home page is driven by this list.
+// To add or change an experience, edit a tile here; the board and the timeline both update.
+// t = category, k = number on the tile, l = short label, sl = what the number means.
+const TYPES = {
+  product:   { name: "Product",   c: "var(--product)",   dark: false },
+  finance:   { name: "Finance",   c: "var(--finance)",   dark: true  },
+  strategy:  { name: "Strategy",  c: "var(--strategy)",  dark: false },
+  build:     { name: "Build",     c: "var(--build)",     dark: false },
+  community: { name: "Community", c: "var(--community)", dark: true  },
+  desert:    { name: "About",     c: "var(--desert)",    dark: true  }
+};
 
-// Wait for the DOM to be fully loaded before running scripts
-document.addEventListener('DOMContentLoaded', function() {
-    
-    // Initialize all interactive features
-    initScrollAnimations();
-    initProjectCardInteractions();
-    initSocialLinkInteractions();
-    initTypingAnimation();
-    initSmoothScrolling();
-    
-    console.log('Zayd Musa website loaded successfully! 🚀');
-});
+// Board order: rows of 3, 4, 5, 4, 3.
+const TILES = [
+  { id: "hone", t: "product", k: "1st", l: "Hone", title: "Hone", role: "Product Space Fellow", meta: "Davis, CA · Apr – Jun 2025", when: "Apr – Jun 2025", win: "1st place",
+    d: "A housing platform that matches students with local housing. I interviewed students, found where the search breaks down, and let that drive the features: student reviews, direct contact, tours. Prototype in Figma and a full pitch deck.",
+    sl: "place, judged by industry PMs", chips: ["Figma", "User research", "Pitch"], link: ["honedavis.com", "https://www.honedavis.com/"] },
+  { id: "capital-one", t: "finance", k: "15%", l: "Capital One", title: "Capital One", role: "Product Management & Analytics Intern", meta: "Plano, TX · Jun – Aug 2026", when: "Jun – Aug 2026",
+    d: "Rebuilt the commission structure for the reps who sell Pre-Approval to car dealerships. Sourced revenue, compensation and usage data, found the loopholes and misaligned incentives, then built a calculator to find optimal rates. Presented to the VP of Auto Finance.",
+    sl: "estimated savings on commission paid out", chips: ["SQL", "Python", "Tableau", "Google Sheets"] },
+  { id: "neural-net", t: "build", k: "85%", l: "Neural Net", title: "Neural network from scratch", role: "Davis Consulting Group project", meta: "Davis, CA · Jun 2025", when: "Jun 2025",
+    d: "A four-layer network in NumPy with no ML libraries: ReLU activations, softmax output, cross-entropy loss. It classifies clothing images, including photos you upload yourself.",
+    sl: "accuracy on clothing classification", chips: ["Python", "NumPy", "Deep learning"], link: ["GitHub", "https://github.com/zaydmusa/Neural-Net"] },
 
-/* ============================================
-   SCROLL-TRIGGERED ANIMATIONS
-   Fade in sections as they come into view
-   ============================================ */
+  { id: "dcg", t: "community", k: "200", l: "DCG · VP", title: "Davis Consulting Group", role: "VP of Professional Development", meta: "Davis, CA · Jun 2026 – Present", when: "Jun 2026 – now",
+    d: "On the board. I run twice-weekly sessions on interviewing, résumés, decks and data analysis, and built a new program to get new members client-ready faster. After it launched, two of three clients paid for our work.",
+    sl: "people at the casing workshop I designed and led", chips: ["Teaching", "Program design", "Board"] },
+  { id: "ask", t: "strategy", k: "8", l: "Ask Solutions", title: "Ask Solutions", role: "Engagement Manager, Davis Consulting Group", meta: "Sep – Dec 2025", when: "Sep – Dec 2025",
+    d: "Market research for a B2B intranet product aimed at retail. We benchmarked competitors on size, features and how they find customers, set up discovery calls with prospects, and delivered feature recommendations. I set the direction and managed the client.",
+    sl: "student consultants on my team", chips: ["Market research", "Client management", "B2B"] },
+  { id: "dorsal", t: "product", k: "40%", l: "Dorsal.fyi", title: "Dorsal.fyi", role: "Product Management Intern", meta: "Palo Alto, CA · Jun – Aug 2025", when: "Jun – Aug 2025",
+    d: "A medtech startup that negotiates medical bills for you. I ran user interviews, market and competitor research, scoped the key features, and built out the pivot to a B2B platform for insurers and clinics. Later acquired by Promise.",
+    sl: "less friction in the AI-assisted flows I prototyped", chips: ["Figma", "HTML/CSS/JS", "User interviews"], link: ["dorsal.fyi", "https://www.dorsal.fyi"] },
+  { id: "asucd", t: "finance", k: "$22M", l: "ASUCD", title: "ASUCD", role: "Vice Controller", meta: "Davis, CA · Apr – Jun 2025, Oct 2025 – Apr 2026", when: "Apr 2025 – Apr 2026",
+    d: "Student government budget. Worked with 30+ campus units to find $250K in cuts, and replaced a manual form-to-ledger process with linked sheets that fill in the budget system on their own.",
+    sl: "budget under management", chips: ["Budgeting", "Sheets automation", "30+ units"] },
 
-function initScrollAnimations() {
-    // Create intersection observer for fade-in animations
-    const observerOptions = {
-        threshold: 0.1,           // Trigger when 10% of element is visible
-        rootMargin: '0px 0px -50px 0px'  // Start animation 50px before element enters viewport
-    };
-    
-    // Observer callback function
-    const animateOnScroll = (entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Add animation class when element comes into view
-                entry.target.classList.add('animate-fade-in');
-                
-                // Stop observing this element (animation only happens once)
-                observer.unobserve(entry.target);
-            }
-        });
-    };
-    
-    // Create the observer
-    const scrollObserver = new IntersectionObserver(animateOnScroll, observerOptions);
-    
-    // Elements to animate on scroll
-    const animatedElements = document.querySelectorAll('.about-section, .social-section, .projects-section, .project-card');
-    
-    // Start observing each element
-    animatedElements.forEach(element => {
-        element.classList.add('fade-element'); // Add initial hidden state
-        scrollObserver.observe(element);
-    });
-    
-    // Add CSS styles for fade animation (done via JavaScript to keep CSS clean)
-    addFadeAnimationStyles();
-}
+  { id: "formula", t: "build", k: "CAN", l: "Formula Racing", title: "Formula Racing at UC Davis", role: "Firmware Engineering", meta: "Davis, CA · Sep – Dec 2025", when: "Sep – Dec 2025",
+    d: "Python dashboards that turn CAN bus telemetry from the car into something the electrical, mechanical and driving teams can act on after a test day.",
+    sl: "bus telemetry, made readable", chips: ["Python", "Telemetry", "Dashboards"] },
+  { id: "sofi", t: "product", k: "1st", l: "SoFi pitch", title: "SoFi Externship", role: "Team lead", meta: "San Francisco, CA · Jun 2025", when: "Jun 2025", win: "1st place",
+    d: "Asked to improve SoFi's product lineup, we studied their customers, goals and regulators and landed on crypto. Built the product concept and a Figma mockup, talked to employees, and pitched a roughly $225M revenue opportunity.",
+    sl: "place, and shown to SoFi's CEO", chips: ["Strategy", "Figma", "Fintech"] },
+  { id: "about", t: "desert", k: "Hi", l: "About me", title: "About me", role: "Third-year at UC Davis, graduating June 2028", meta: "Davis, CA",
+    d: "Economics and Middle East/South Asia Studies, with minors in Computer Science and Psychology. Looking for part-time work and internships in product, analytics and strategy.",
+    sl: "", chips: ["Economics", "MESA", "CS", "Psychology"], link: ["More about me", "about.html"], internal: true },
+  { id: "aws", t: "strategy", k: "5+", l: "AWS", title: "Amazon Web Services", role: "Consultant, Davis Consulting Group", meta: "Jun – Sep 2025", when: "Jun – Sep 2025",
+    d: "Contracted to help AWS sell Just Walk Out technology across the Bay Area and Davis–Sacramento. Ran outreach to potential clients and connected the interested ones to AWS.",
+    sl: "discovery meetings set up", chips: ["Outreach", "Sales", "Retail tech"] },
+  { id: "bsa", t: "community", k: "VP", l: "BSA", title: "Bengali Student Association", role: "Social Media Manager → Secretary → Vice President", meta: "Davis, CA · Oct 2024 – Present", when: "Oct 2024 – now",
+    d: "Marketing, planning and running cultural events, and growing attendance through campaigns and partnerships with other campus organizations.",
+    sl: "after Social Media Manager and Secretary", chips: ["Marketing", "Events", "Culture"], link: ["Instagram", "https://www.instagram.com/bsaatdavis/"] },
 
-function addFadeAnimationStyles() {
-    // Create and inject CSS for fade animations
-    const style = document.createElement('style');
-    style.textContent = `
-        .fade-element {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        
-        .animate-fade-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* Stagger animation for project cards */
-        .project-card.fade-element {
-            transition-delay: calc(var(--animation-delay, 0) * 100ms);
-        }
-    `;
-    document.head.appendChild(style);
-    
-    // Add staggered delays to project cards for a wave effect
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach((card, index) => {
-        card.style.setProperty('--animation-delay', index);
-    });
-}
+  { id: "fenwick", t: "finance", k: "200+", l: "Fenwick & West", title: "Fenwick & West", role: "Finance Intern", meta: "Mountain View, CA · Jul – Sep 2025", when: "Jul – Sep 2025",
+    d: "Vendor payments for a large tech law firm. When a new office didn't fit the old system, I built an expense-tracking workaround in Excel to keep its accounts straight, and audited expense data along the way.",
+    sl: "invoices a month, 100% accuracy", chips: ["Excel", "Audit", "Accounts payable"] },
+  { id: "product-space", t: "product", k: "Pres.", l: "Product Space", title: "Product Space at UC Davis", role: "Fellow → Director of Strategic Partnerships → President", meta: "Davis, CA · Apr 2025 – Present", when: "Jun 2025 – now",
+    d: "As Director I launched the client program: fellowship alumni doing real projects for 10+ startups, local businesses and international companies. As President I run the board and general body, with relationships at Stripe, LinkedIn, Workday, Microsoft and Oracle.",
+    sl: "since January 2026", chips: ["Leadership", "Partnerships", "Product"] },
+  { id: "lci", t: "community", k: "25%", l: "Governor's Office", title: "Governor's Office of Land Use & Climate Innovation", role: "Project & Operations Assistant", meta: "Sacramento, CA · Sep – Nov 2025", when: "Sep – Nov 2025",
+    d: "Built a unified intranet so anyone could see progress on every ongoing project. Then worked through the CEQAnet submission form the way an applicant would, and wrote guidance notes at each friction point.",
+    sl: "of help-desk inquiries answered by my notes", chips: ["SharePoint", "Asana", "Public sector"] },
+  { id: "id-fresh", t: "strategy", k: "US", l: "iD Fresh Foods", title: "iD Fresh Foods", role: "Consultant, Davis Consulting Group", meta: "Jan – Jun 2025", when: "Jan – Jun 2025",
+    d: "U.S. market entry for a multinational Indian food brand: competitors, distributors, pricing benchmarks, and whether to contract locally, acquire, or import.",
+    sl: "market entry study", chips: ["Market entry", "Excel", "Pricing"] },
 
-/* ============================================
-   PROJECT CARD INTERACTIONS
-   Enhanced hover effects and click handling
-   ============================================ */
+  { id: "buzzit", t: "community", k: "300+", l: "BuzzIt", title: "BuzzIt", role: "Consultant, Davis Consulting Group", meta: "Apr – Jun 2025", when: "Apr – Jun 2025",
+    d: "A Davis startup building a student-only marketplace for services. Shaped launch features and go-to-market, modeled on student campaigns that had already worked.",
+    sl: "first users", chips: ["Go-to-market", "Growth", "Startup"] },
+  { id: "prodcon", t: "build", k: "2 days", l: "ProdCon", title: "ProdCon", role: "Lead organizer, Product Space", meta: "Davis, CA · 2026", when: "2026",
+    d: "A two-day hackathon: 200+ people, cash prizes, judges and workshops with OpenAI and industry speakers. I led planning across five other student organizations.",
+    sl: "200+ attendees, 6 organizations", chips: ["Hackathon", "Logistics", "Partnerships"] },
+  { id: "prizmich", t: "finance", k: "M&A", l: "Lori Prizmich", title: "Lori Prizmich & Associates", role: "Consultant, Davis Consulting Group", meta: "Jan – Mar 2025", when: "Jan – Mar 2025",
+    d: "Supported an M&A transaction for a real estate firm: valued the business from comparable transactions and its own financials, modeled a deal structure, and managed competing interests between the parties.",
+    sl: "valuation and deal modeling", chips: ["Valuation", "Comps", "Deal structure"] }
+];
 
-function initProjectCardInteractions() {
-    const projectCards = document.querySelectorAll('.project-card');
-    
-    projectCards.forEach(card => {
-        // Add hover sound effect (optional)
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-8px) scale(1.02)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-        
-        // Add click tracking for analytics (you can integrate with Google Analytics later)
-        const projectLink = card.querySelector('.project-link');
-        if (projectLink) {
-            projectLink.addEventListener('click', function(e) {
-                const projectTitle = card.querySelector('.project-title').textContent;
-                console.log(`Project clicked: ${projectTitle}`);
-                
-                // You can add analytics tracking here
-                // gtag('event', 'project_click', { project_name: projectTitle });
-            });
-        }
-        
-        // Add keyboard navigation support
-        card.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                const link = this.querySelector('.project-link');
-                if (link) link.click();
-            }
-        });
-    });
-}
+// Timeline: oldest first. Each stage lists tile ids in order.
+const STAGES = [
+  { name: "First year", sub: "2024 – 25 · finding my footing in consulting, product and student government", ids: ["bsa", "prizmich", "id-fresh", "asucd", "buzzit", "hone"] },
+  { name: "Summer 2025", sub: "Bay Area · a startup, a law firm, AWS and a pitch competition", ids: ["sofi", "neural-net", "dorsal", "aws", "fenwick"] },
+  { name: "Second year", sub: "2025 – 26 · leading teams", ids: ["lci", "ask", "formula", "product-space", "prodcon"] },
+  { name: "Summer 2026", sub: "Plano, Texas", ids: ["capital-one"] },
+  { name: "Now", sub: "Third year · graduating June 2028", ids: ["dcg"] }
+];
 
-/* ============================================
-   SOCIAL LINK INTERACTIONS
-   Enhanced hover effects and click tracking
-   ============================================ */
+const NS = "http://www.w3.org/2000/svg";
+const svgEl = (n, a = {}, txt) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; return e; };
+const board = document.getElementById("board"), card = document.getElementById("card"), legend = document.getElementById("legend"), timeline = document.getElementById("timeline");
+const byId = Object.fromEntries(TILES.map((t, i) => [t.id, i]));
+let selected = byId["capital-one"], filter = null;
 
-function initSocialLinkInteractions() {
-    const socialLinks = document.querySelectorAll('.social-link');
-    
-    socialLinks.forEach(link => {
-        // Add enhanced hover effect
-        link.addEventListener('mouseenter', function() {
-            const icon = this.querySelector('i');
-            icon.style.transform = 'scale(1.2) rotate(5deg)';
-        });
-        
-        link.addEventListener('mouseleave', function() {
-            const icon = this.querySelector('i');
-            icon.style.transform = 'scale(1) rotate(0deg)';
-        });
-        
-        // Track social media clicks
-        link.addEventListener('click', function() {
-            const platform = this.querySelector('span').textContent;
-            console.log(`Social link clicked: ${platform}`);
-            
-            // You can add analytics tracking here
-            // gtag('event', 'social_click', { platform: platform });
-        });
-    });
-}
-
-/* ============================================
-   TYPING ANIMATION
-   Animated typing effect for the title
-   ============================================ */
-
-function initTypingAnimation() {
-    const titleElement = document.querySelector('.title');
-    if (!titleElement) return;
-    
-    const originalText = titleElement.textContent;
-    const typingSpeed = 50; // milliseconds between each character
-    const startDelay = 1000; // delay before starting animation
-    
-    // Clear the text initially
-    titleElement.textContent = '';
-    titleElement.style.borderRight = '2px solid var(--accent-primary)'; // Add cursor
-    
-    // Start typing animation after delay
-    setTimeout(() => {
-        typeText(titleElement, originalText, 0, typingSpeed);
-    }, startDelay);
-}
-
-function typeText(element, text, index, speed) {
-    if (index < text.length) {
-        element.textContent += text.charAt(index);
-        setTimeout(() => typeText(element, text, index + 1, speed), speed);
-    } else {
-        // Remove cursor after typing is complete
-        setTimeout(() => {
-            element.style.borderRight = 'none';
-        }, 1000);
+function drawBoard() {
+  const R = 58, W = Math.sqrt(3) * R, rows = [3, 4, 5, 4, 3], cx = 330, cy = 295;
+  const hexPts = (x, y, r, rot, sy = 1) => [...Array(6)].map((_, k) => { const a = Math.PI / 180 * (60 * k + rot); return (x + r * Math.cos(a)).toFixed(1) + "," + (y + r * Math.sin(a) * sy).toFixed(1); }).join(" ");
+  board.append(svgEl("polygon", { points: hexPts(cx, cy, 310, 0, .92), fill: "var(--sea)", stroke: "var(--ink)", "stroke-width": 2, "stroke-linejoin": "round" }));
+  for (let i = 0; i < 14; i++) { const x = 70 + (i * 97) % 520, y = 40 + (i * 61) % 520; board.append(svgEl("path", { d: `M${x} ${y}q8 -6 16 0t16 0`, fill: "none", stroke: "#fff", "stroke-opacity": .25, "stroke-width": 2, "stroke-linecap": "round" })); }
+  let i = 0;
+  rows.forEach((n, r) => {
+    for (let c = 0; c < n; c++, i++) {
+      const tile = TILES[i], idx = i, x = cx - (n - 1) * W / 2 + c * W, y = cy + (r - 2) * 1.5 * R, ty = TYPES[tile.t];
+      const g = svgEl("g", { class: "hex", tabindex: 0, role: "button", "aria-label": tile.title });
+      g.append(svgEl("polygon", { points: hexPts(x, y, R, -30), fill: ty.c }));
+      const tw = Math.max(34, tile.k.length * 10 + 16);
+      g.append(svgEl("rect", { class: "tok", x: x - tw / 2, y: y - 27, width: tw, height: 30, rx: 15 }));
+      g.append(svgEl("text", { class: "tokt", x, y: y - 6.5, "text-anchor": "middle" }, tile.k));
+      g.append(svgEl("text", { class: "lbl" + (ty.dark ? " dark" : ""), x, y: y + 24, "text-anchor": "middle" }, tile.l));
+      g.addEventListener("click", () => show(idx));
+      g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(idx); } });
+      tile.g = g; board.append(g);
     }
+  });
 }
 
-/* ============================================
-   SMOOTH SCROLLING
-   Enhanced smooth scrolling for navigation
-   ============================================ */
+function show(n) {
+  selected = n;
+  const t = TILES[n], ty = TYPES[t.t];
+  TILES.forEach((x, k) => x.g.classList.toggle("sel", k === n));
+  card.innerHTML = `<div class="tag"><i style="background:${ty.c}"></i>${ty.name}</div>
+    <h2>${t.title}</h2><div class="role">${t.role}</div><div class="meta">${t.meta}</div>
+    <p>${t.d}</p>
+    ${t.sl ? `<div class="stat"><b>${t.k}</b><span>${t.sl}</span></div>` : ""}
+    <div class="chips">${t.chips.map(c => `<span>${c}</span>`).join("")}</div>
+    ${t.link ? `<a class="more" href="${t.link[1]}"${t.internal ? "" : ' target="_blank" rel="noopener"'}>${t.link[0]} →</a>` : ""}
+    ${t.when ? `<a class="more" href="#${t.id}">See it in the timeline ↓</a>` : ""}`;
+}
 
-function initSmoothScrolling() {
-    // Add smooth scrolling to any anchor links (if you add navigation later)
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
+function drawLegend() {
+  Object.entries(TYPES).filter(([k]) => k !== "desert").forEach(([k, v]) => {
+    const b = document.createElement("button");
+    b.innerHTML = `<i style="background:${v.c}"></i>${v.name}`;
+    b.setAttribute("aria-pressed", "false");
+    b.onclick = () => {
+      filter = filter === k ? null : k;
+      [...legend.children].forEach(x => { const on = x === b && !!filter; x.classList.toggle("on", on); x.setAttribute("aria-pressed", on); });
+      TILES.forEach(t => t.g.classList.toggle("dim", !!filter && t.t !== filter));
+      if (filter && TILES[selected].t !== filter) show(TILES.findIndex(t => t.t === filter));
+    };
+    legend.append(b);
+  });
+}
+
+function drawTimeline() {
+  STAGES.forEach(s => {
+    const h = document.createElement("h3");
+    h.innerHTML = `${s.name}<small>${s.sub}</small>`;
+    timeline.append(h);
+    s.ids.forEach(id => {
+      const t = TILES[byId[id]], a = document.createElement("article");
+      a.className = "ev" + (t.win ? " win" : ""); a.id = id; a.style.setProperty("--c", TYPES[t.t].c);
+      a.innerHTML = `<time>${t.when}</time><div class="body" tabindex="0" role="button" aria-label="Show ${t.title} on the board">
+        <h4>${t.title}${t.win ? `<span class="badge">${t.win}</span>` : ""}</h4>
+        <div class="role">${t.role}</div><p><b>${t.k}</b> ${t.sl}</p></div>`;
+      const go = () => { show(byId[id]); document.getElementById("work").scrollIntoView({ behavior: "smooth" }); };
+      const body = a.querySelector(".body");
+      body.addEventListener("click", go);
+      body.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+      timeline.append(a);
     });
-    
-    // Add scroll-to-top functionality (can be used with a button later)
-    window.scrollToTop = function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    };
+  });
 }
 
-/* ============================================
-   PERFORMANCE UTILITIES
-   Optimize animations and interactions
-   ============================================ */
-
-// Debounce function for scroll events (if needed later)
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Throttle function for resize events (if needed later)
-function throttle(func, limit) {
-    let inThrottle;
-    return function() {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    };
-}
-
-/* ============================================
-   ACCESSIBILITY ENHANCEMENTS
-   Keyboard navigation and screen reader support
-   ============================================ */
-
-// Add keyboard navigation for project cards
-function enhanceKeyboardNavigation() {
-    const focusableElements = document.querySelectorAll('.social-link, .project-link, .project-card');
-    
-    focusableElements.forEach(element => {
-        // Add tabindex for keyboard navigation
-        element.setAttribute('tabindex', '0');
-        
-        // Add visual focus indicator
-        element.addEventListener('focus', function() {
-            this.style.outline = '2px solid var(--accent-primary)';
-            this.style.outlineOffset = '2px';
-        });
-        
-        element.addEventListener('blur', function() {
-            this.style.outline = 'none';
-        });
-    });
-}
-
-/* ============================================
-   UTILITY FUNCTIONS
-   Helper functions for various features
-   ============================================ */
-
-// Function to update project images (can be called when adding images)
-window.updateProjectImage = function(projectIndex, imageSrc, altText) {
-    const projectCards = document.querySelectorAll('.project-card');
-    if (projectCards[projectIndex]) {
-        const placeholder = projectCards[projectIndex].querySelector('.project-image-placeholder');
-        
-        // Create and insert image element
-        const img = document.createElement('img');
-        img.src = imageSrc;
-        img.alt = altText || 'Project screenshot';
-        img.style.width = '100%';
-        img.style.height = '100%';
-        img.style.objectFit = 'cover';
-        
-        // Replace placeholder content with image
-        placeholder.innerHTML = '';
-        placeholder.appendChild(img);
-        
-        console.log(`Updated project ${projectIndex} image`);
-    }
-};
-
-// Function to add new project (for future expansion)
-window.addProject = function(projectData) {
-    const projectsGrid = document.querySelector('.projects-grid');
-    const projectCard = createProjectCard(projectData);
-    projectsGrid.appendChild(projectCard);
-    
-    console.log('New project added:', projectData.title);
-};
-
-function createProjectCard(data) {
-    // This function can be used to dynamically create project cards
-    // Implementation would mirror the HTML structure in index.html
-    const card = document.createElement('div');
-    card.className = 'project-card fade-element';
-    
-    // Add project card HTML structure here if needed for dynamic content
-    // For now, keeping it simple since projects are static
-    
-    return card;
-}
-
-/* ============================================
-   ERROR HANDLING AND DEBUGGING
-   ============================================ */
-
-// Global error handler for debugging
-window.addEventListener('error', function(e) {
-    console.error('JavaScript error on Zayd Musa website:', e.error);
-});
-
-// Console styling for development
-if (console && console.log) {
-    console.log(
-        '%c🚀 Zayd Musa Personal Website',
-        'color: #598556; font-size: 16px; font-weight: bold;'
-    );
-    console.log(
-        '%cDesigned with modern web technologies and sustainable development practices in mind.',
-        'color: #e0e0e0; font-size: 12px;'
-    );
-}
-
-/* ============================================
-   INITIALIZATION COMPLETE
-   ============================================ */
-
-// Export functions for potential external use
-window.ZaydMusaWebsite = {
-    updateProjectImage: window.updateProjectImage,
-    addProject: window.addProject,
-    scrollToTop: window.scrollToTop
-};
-
-console.log('✅ All interactive features initialized successfully!');
+drawBoard(); drawLegend(); drawTimeline(); show(selected);

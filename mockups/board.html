@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zayd Musa · The Board (mockup A)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f4ead5; --paper-2:#fbf5e6; --ink:#2b2118; --ink-2:#6b5a48; --line:#d9c8a5;
+  --sea:#2f7f93; --sea-2:#246a7c;
+  --product:#3f7d4e; --finance:#e0b23c; --strategy:#7d8590; --build:#b9553a; --community:#9cc267; --desert:#e6cf9a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;line-height:1.55;
+  background-image:radial-gradient(circle at 20% 0%,#fff8e6 0,transparent 45%),radial-gradient(circle at 100% 30%,#efe0bf 0,transparent 40%)}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;margin:0;line-height:1.05}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;padding:40px 0 20px;border-bottom:2px solid var(--ink)}
+.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);font-weight:700}
+h1{font-size:clamp(44px,8vw,92px);font-weight:900;letter-spacing:-.02em}
+h1 em{font-style:italic;font-weight:500;color:var(--build)}
+.sub{max-width:420px;font-size:16px;color:var(--ink-2)}
+.sub b{color:var(--ink)}
+
+.play{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:28px;padding:28px 0;align-items:start}
+.boardbox{position:relative}
+svg.board{width:100%;height:auto;display:block}
+.hex{cursor:pointer;transition:transform .18s ease;transform-box:fill-box;transform-origin:center}
+.hex:hover,.hex:focus{transform:scale(1.06);outline:none}
+.hex polygon{stroke:#f6ecd4;stroke-width:4;transition:opacity .2s}
+.hex.dim{opacity:.28}
+.hex.sel polygon{stroke:var(--ink);stroke-width:4}
+.hex text{pointer-events:none;font-family:"DM Sans",sans-serif}
+.tok{fill:#fbf3df;stroke:#2b2118;stroke-width:1.5}
+.tokt{font-family:Fraunces,serif!important;font-weight:700;font-size:15px;fill:#2b2118}
+.lbl{font-size:9.5px;font-weight:700;fill:#fff;letter-spacing:.02em}
+.lbl.dark{fill:#2b2118}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.legend button{font:inherit;font-size:13px;font-weight:700;border:2px solid var(--ink);background:var(--paper-2);border-radius:999px;padding:5px 12px 5px 8px;cursor:pointer;display:flex;align-items:center;gap:7px;color:var(--ink)}
+.legend button i{width:14px;height:14px;border-radius:3px;display:block;border:1.5px solid var(--ink)}
+.legend button.on{background:var(--ink);color:var(--paper-2)}
+.hint{font-size:13px;color:var(--ink-2);margin:10px 0 0}
+
+.card{background:var(--paper-2);border:2px solid var(--ink);border-radius:18px;padding:22px;box-shadow:6px 6px 0 var(--ink);position:sticky;top:16px}
+.card .tag{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.card .tag i{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--ink)}
+.card h2{font-size:30px;margin:12px 0 4px;font-weight:700}
+.card .role{font-weight:700}
+.card .meta{font-size:13px;color:var(--ink-2);margin-bottom:12px}
+.card p{margin:0 0 14px;font-size:15.5px}
+.stat{display:flex;gap:14px;align-items:center;border-top:1.5px dashed var(--line);padding-top:14px}
+.stat b{font-family:Fraunces,serif;font-size:38px;line-height:1;font-weight:900}
+.stat span{font-size:13px;color:var(--ink-2)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.chips span{font-size:12px;border:1.5px solid var(--ink);border-radius:6px;padding:2px 8px;background:#fff}
+.card a.more{display:inline-block;margin-top:14px;font-weight:700;font-size:14px}
+
+section{padding:36px 0;border-top:2px solid var(--ink)}
+section>h2{font-size:clamp(28px,4vw,40px);font-weight:900;margin-bottom:6px}
+section>p.lead{color:var(--ink-2);margin:0 0 22px;max-width:640px}
+.score{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.pt{background:var(--paper-2);border:2px solid var(--ink);border-radius:14px;padding:16px;display:flex;gap:14px;align-items:flex-start}
+.pt .n{flex:none;width:46px;height:46px;border-radius:50%;background:var(--ink);color:var(--paper-2);display:grid;place-items:center;font-family:Fraunces,serif;font-weight:900;font-size:20px}
+.pt h3{font-size:18px;font-weight:700;margin-bottom:4px}
+.pt p{margin:0;font-size:14px;color:var(--ink-2)}
+.track{display:flex;gap:6px;margin:22px 0 6px;flex-wrap:wrap}
+.track i{width:34px;height:34px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font-style:normal;font-weight:700;font-size:13px}
+.track i.got{background:var(--build);color:#fff}
+
+.hand{display:flex;flex-wrap:wrap;gap:14px}
+.rc{width:170px;flex:1 1 170px;max-width:230px;border:2px solid var(--ink);border-radius:14px;overflow:hidden;background:var(--paper-2);transition:transform .2s}
+.rc:nth-child(odd){transform:rotate(-1.5deg)} .rc:nth-child(even){transform:rotate(1.2deg)}
+.rc:hover{transform:translateY(-6px) rotate(0)}
+.rc .top{height:64px;display:flex;align-items:flex-end;padding:8px 12px;font-family:Fraunces,serif;font-weight:700;font-size:20px;color:#fff;border-bottom:2px solid var(--ink)}
+.rc ul{margin:0;padding:12px 12px 14px 28px;font-size:14px}
+
+.harbor{background:var(--sea);color:#fff;border-radius:22px;border:2px solid var(--ink);padding:32px;display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:center}
+.harbor h2{font-size:clamp(28px,4vw,42px);font-weight:900}
+.harbor p{margin:10px 0 0;opacity:.92}
+.ports{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ports a{background:var(--paper-2);color:var(--ink);text-decoration:none;font-weight:700;border:2px solid var(--ink);border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between}
+.ports a:hover{background:var(--finance)}
+footer{padding:26px 0 50px;font-size:13px;color:var(--ink-2)}
+@media (max-width:860px){.play{grid-template-columns:1fr}.card{position:static}.harbor{grid-template-columns:1fr;padding:22px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">UC Davis · Economics + Middle East/South Asia Studies · CS + Psychology</div>
+      <h1>Zayd Musa,<br><em>in nineteen tiles.</em></h1>
+    </div>
+    <p class="sub">I spend a lot of evenings trading sheep for ore. Turns out my résumé fits on the same board: <b>five resources, nineteen tiles,</b> and a habit of building on whatever I roll. Tap a tile.</p>
+  </header>
+
+  <div class="play">
+    <div class="boardbox">
+      <svg class="board" id="board" viewBox="0 0 660 590" role="group" aria-label="Board of experiences"></svg>
+      <div class="legend" id="legend"></div>
+      <p class="hint">The number on each tile is the stat I'd lead with. Filter by resource, or tap the desert.</p>
+    </div>
+    <aside class="card" id="card" aria-live="polite"></aside>
+  </div>
+
+  <section>
+    <h2>Scoreboard</h2>
+    <p class="lead">First to ten wins. I'm at eight, and it's still my turn.</p>
+    <div class="score">
+      <div class="pt"><div class="n">2</div><div><h3>Longest route</h3><p>Product Space, three seats in a row: Fellow → Director of Strategic Partnerships → President.</p></div></div>
+      <div class="pt"><div class="n">2</div><div><h3>Biggest crowd</h3><p>ProdCon, a two-day hackathon for 200+ people, and a 200-person casing workshop for DCG.</p></div></div>
+      <div class="pt"><div class="n">1</div><div><h3>1st place · SoFi</h3><p>Led the crypto pitch that won the externship and went up to SoFi's CEO.</p></div></div>
+      <div class="pt"><div class="n">1</div><div><h3>1st place · Hone</h3><p>Student housing platform, picked first by industry judges at Product Space.</p></div></div>
+      <div class="pt"><div class="n">1</div><div><h3>Treasury</h3><p>Vice Controller on ASUCD's $22M budget, and found the $250K in cuts.</p></div></div>
+      <div class="pt"><div class="n">1</div><div><h3>Trade route</h3><p>Rebuilt a sales commission structure at Capital One, presented to the VP of Auto Finance.</p></div></div>
+    </div>
+    <div class="track" aria-label="8 of 10 points"><i class="got">1</i><i class="got">2</i><i class="got">3</i><i class="got">4</i><i class="got">5</i><i class="got">6</i><i class="got">7</i><i class="got">8</i><i>9</i><i>10</i></div>
+  </section>
+
+  <section>
+    <h2>What's in my hand</h2>
+    <p class="lead">The cards I actually play with.</p>
+    <div class="hand">
+      <div class="rc"><div class="top" style="background:var(--product)">Product</div><ul><li>User interviews</li><li>Figma prototyping</li><li>Feature scoping</li><li>Pitch decks</li></ul></div>
+      <div class="rc"><div class="top" style="background:var(--finance);color:var(--ink)">Finance</div><ul><li>Budgeting</li><li>Excel &amp; Sheets models</li><li>Incentive design</li><li>Valuation comps</li></ul></div>
+      <div class="rc"><div class="top" style="background:var(--strategy)">Strategy</div><ul><li>Market research</li><li>Competitor benchmarks</li><li>Client management</li><li>Casing</li></ul></div>
+      <div class="rc"><div class="top" style="background:var(--build)">Build</div><ul><li>Python</li><li>SQL</li><li>Tableau</li><li>HTML / CSS / JS</li></ul></div>
+      <div class="rc"><div class="top" style="background:var(--community);color:var(--ink)">Community</div><ul><li>Running a board</li><li>Event planning</li><li>Outreach</li><li>Teaching &amp; workshops</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="harbor">
+      <div>
+        <h2>The harbor: open to trades.</h2>
+        <p>Standing offer, 1:1. Your interesting problem for my full attention. Product, analytics and strategy roles especially.</p>
+      </div>
+      <div class="ports">
+        <a href="mailto:zaydmusa.zm@gmail.com">Email <span>→</span></a>
+        <a href="https://www.linkedin.com/in/zayd-musa/">LinkedIn <span>→</span></a>
+        <a href="https://github.com/zaydmusa">GitHub <span>→</span></a>
+        <a href="https://www.instagram.com/zayd.musa/">Instagram <span>→</span></a>
+      </div>
+    </div>
+  </section>
+  <footer>Mockup A of 3 · a hex-board homage, drawn from scratch.</footer>
+</div>
+
+<script>
+const T={
+  product:{name:"Product",c:"var(--product)",dark:false},
+  finance:{name:"Finance",c:"var(--finance)",dark:true},
+  strategy:{name:"Strategy",c:"var(--strategy)",dark:false},
+  build:{name:"Build",c:"var(--build)",dark:false},
+  community:{name:"Community",c:"var(--community)",dark:true},
+  desert:{name:"Off the clock",c:"var(--desert)",dark:true}
+};
+const tiles=[
+ // row 0
+ {t:"product",k:"1st",l:"Hone",title:"Hone",role:"Product Space Fellow",meta:"Davis, CA · Apr – Jun 2025",d:"A housing platform that matches students with local housing. I talked to students, found where the search actually breaks, and let that drive the features: student reviews, direct contact, tours. Prototype in Figma, full pitch deck.",sl:"place, judged by industry PMs",chips:["Figma","User research","Pitch"],link:["honedavis.com","https://www.honedavis.com/"]},
+ {t:"finance",k:"15%",l:"Capital One",title:"Capital One",role:"Product Management & Analytics Intern",meta:"Plano, TX · Jun – Aug 2026",d:"Rebuilt the commission structure for the reps who sell Pre-Approval to car dealerships. Sourced revenue, compensation and usage data, found the loopholes and misaligned incentives, then built a calculator to find optimal rates. Presented to the VP of Auto Finance.",sl:"estimated savings on commission paid out",chips:["SQL","Python","Tableau","Google Sheets"]},
+ {t:"build",k:"85%",l:"Neural Net",title:"Neural network, from scratch",role:"Davis Consulting Group project",meta:"Davis, CA · Jun 2025",d:"A four-layer network with no ML libraries: ReLU activations, softmax output, cross-entropy loss. It classifies clothing images, and you can upload a photo of your own shirt and watch it guess.",sl:"accuracy on clothing classification",chips:["Python","Softmax","Cross-entropy"],link:["GitHub","https://github.com/zaydmusa/Neural-Net"]},
+ // row 1
+ {t:"community",k:"200",l:"DCG · VP",title:"Davis Consulting Group",role:"VP of Professional Development",meta:"Davis, CA · Jun 2026 – Present",d:"On the board. I run twice-weekly sessions on interviewing, résumés, decks and data analysis, and built a new program to get new members client-ready faster. After it launched, two of three clients paid for our work.",sl:"people at the casing workshop I designed and led",chips:["Teaching","Program design","Board"]},
+ {t:"strategy",k:"8",l:"Ask Solutions",title:"Ask Solutions",role:"Engagement Manager, DCG",meta:"Sep – Dec 2025",d:"Market research for a B2B intranet product aimed at retail. We benchmarked competitors on size, features and how they find customers, lined up discovery calls with prospects, and delivered feature recommendations. I set the direction and managed the client.",sl:"student consultants on my team",chips:["Market research","Client management","B2B"]},
+ {t:"product",k:"40%",l:"Dorsal.fyi",title:"Dorsal.fyi",role:"Product Management Intern",meta:"Palo Alto, CA · Jun – Aug 2025",d:"A medtech startup that negotiates medical bills for you. I ran user interviews, market and competitor research, scoped the key features, and built out the pivot to a B2B platform for insurers and clinics. Later acquired by Promise.",sl:"less friction in the AI-assisted flows I prototyped",chips:["Figma","HTML/CSS/JS","User interviews"],link:["dorsal.fyi","https://www.dorsal.fyi"]},
+ {t:"finance",k:"$22M",l:"ASUCD",title:"ASUCD",role:"Vice Controller",meta:"Davis, CA · Apr – Jun 2025, Oct 2025 – Apr 2026",d:"Student government budget. Worked with 30+ campus units to find $250K in cuts, and replaced a manual form-to-ledger process with linked sheets that populate the budget system on their own.",sl:"budget under management",chips:["Budgeting","Sheets automation","30+ units"]},
+ // row 2
+ {t:"build",k:"CAN",l:"Formula Racing",title:"Formula Racing at UC Davis",role:"Firmware Engineering",meta:"Davis, CA · Sep – Dec 2025",d:"Python dashboards that turn CAN bus telemetry from the car into something the electrical, mechanical and driving teams can act on after a test day.",sl:"bus telemetry, made readable",chips:["Python","Telemetry","Dashboards"]},
+ {t:"product",k:"1st",l:"SoFi pitch",title:"SoFi Externship",role:"Team lead (unofficially)",meta:"San Francisco, CA · Jun 2025",d:"Asked to improve SoFi's product lineup, we studied their customers, goals and regulators and landed on crypto. Built the product concept and Figma mockup, talked to employees, and pitched a roughly $225M revenue opportunity.",sl:"place, and shown to SoFi's CEO",chips:["Strategy","Figma","Fintech"]},
+ {t:"desert",k:"☀",l:"Off the clock",title:"Off the clock",role:"Nothing gets produced here. That's the point.",meta:"Weekends",d:"Board games that end friendships, a paint set I'm slowly getting better with, and whichever trail is closest. Ask me about any of them.",sl:"",chips:["Board games","Painting","Hiking"]},
+ {t:"strategy",k:"5+",l:"AWS",title:"Amazon Web Services",role:"Consultant, DCG",meta:"Jun – Sep 2025",d:"Contracted to help AWS sell Just Walk Out technology across the Bay Area and Davis–Sacramento. Ran outreach to potential clients and handed the warm ones to AWS.",sl:"discovery meetings set up",chips:["Outreach","Sales","Retail tech"]},
+ {t:"community",k:"VP",l:"BSA",title:"Bengali Student Association",role:"Social Media Manager → Secretary → Vice President",meta:"Davis, CA · Oct 2024 – Present",d:"Marketing, planning and running cultural events, and growing attendance through campaigns and partnerships with other campus orgs.",sl:"third seat in three years",chips:["Marketing","Events","Culture"],link:["Instagram","https://www.instagram.com/bsaatdavis/"]},
+ // row 3
+ {t:"finance",k:"200+",l:"Fenwick & West",title:"Fenwick & West",role:"Finance Intern",meta:"Mountain View, CA · Jul – Sep 2025",d:"Vendor payments for a large tech law firm. When a new office didn't fit the old system, I built an expense-tracking workaround in Excel to keep its accounts straight. Audited expense data along the way.",sl:"invoices a month, 100% accuracy",chips:["Excel","Audit","AP"]},
+ {t:"product",k:"Pres.",l:"Product Space",title:"Product Space at UC Davis",role:"Fellow → Director of Strategic Partnerships → President",meta:"Davis, CA · Apr 2025 – Present",d:"As Director I launched the client program: fellowship alumni doing real projects for 10+ startups, local businesses and international companies. As President I run the board and general body, with relationships at Stripe, LinkedIn, Workday, Microsoft and Oracle.",sl:"since January 2026",chips:["Leadership","Partnerships","Product"]},
+ {t:"community",k:"25%",l:"Governor's Office",title:"Governor's Office of Land Use & Climate Innovation",role:"Project & Operations Assistant",meta:"Sacramento, CA · Sep – Nov 2025",d:"Built a unified intranet so anyone could see progress on every ongoing project. Then walked through the CEQAnet submission form the way a city planner would, and wrote guidance notes at each friction point.",sl:"of help-desk inquiries answered by my notes",chips:["SharePoint","Asana","Public sector"]},
+ {t:"strategy",k:"US",l:"iD Fresh Foods",title:"iD Fresh Foods",role:"Consultant, DCG",meta:"Jan – Jun 2025",d:"U.S. market entry for a multinational Indian food brand: competitors, distributors, pricing benchmarks, and whether to contract locally, acquire, or import.",sl:"market entry study",chips:["Market entry","Excel","Pricing"]},
+ // row 4
+ {t:"community",k:"300+",l:"BuzzIt",title:"BuzzIt",role:"Consultant, DCG",meta:"Apr – Jun 2025",d:"A Davis startup building a student-only marketplace for services. Shaped launch features and go-to-market, modeled on student campaigns that had already worked.",sl:"first users",chips:["GTM","Growth","Startup"]},
+ {t:"build",k:"2 days",l:"ProdCon",title:"ProdCon",role:"Lead organizer, Product Space",meta:"Davis, CA · 2026",d:"A two-day hackathon: 200+ people, cash prizes, judges and workshops with OpenAI and industry speakers. I led planning across five other student organizations.",sl:"200+ attendees, 6 orgs",chips:["Hackathon","Logistics","Partnerships"]},
+ {t:"finance",k:"M&A",l:"Lori Prizmich",title:"Lori Prizmich & Associates",role:"Consultant, DCG",meta:"Jan – Mar 2025",d:"Supported an M&A transaction for a real estate firm: valued the business from comparable transactions and its own financials, modeled a deal structure, and kept both parties at the table.",sl:"valuation and deal modeling",chips:["Valuation","Comps","Deal structure"]}
+];
+
+const NS="http://www.w3.org/2000/svg", R=58, W=Math.sqrt(3)*R, rows=[3,4,5,4,3], cx=330, cy0=295-2*1.5*R;
+const board=document.getElementById("board"), card=document.getElementById("card"), legend=document.getElementById("legend");
+const el=(n,a={},txt)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;return e};
+
+// sea
+const seaPts=[...Array(6)].map((_,i)=>{const a=Math.PI/180*(60*i);return[cx+310*Math.cos(a),295+310*Math.sin(a)*.92].join(",")}).join(" ");
+board.append(el("polygon",{points:seaPts,fill:"var(--sea)",stroke:"var(--ink)","stroke-width":2,"stroke-linejoin":"round"}));
+for(let i=0;i<14;i++){const x=70+((i*97)%520),y=40+((i*61)%520);board.append(el("path",{d:`M${x} ${y}q8 -6 16 0t16 0`,fill:"none",stroke:"#fff","stroke-opacity":.25,"stroke-width":2,"stroke-linecap":"round"}))}
+
+let i=0, filter=null, sel=1;
+rows.forEach((n,r)=>{
+  for(let c=0;c<n;c++,i++){
+    const tile=tiles[i], idx=i, x=cx-(n-1)*W/2+c*W, y=cy0+r*1.5*R, ty=T[tile.t];
+    const pts=[...Array(6)].map((_,k)=>{const a=Math.PI/180*(60*k-30);return[(x+R*Math.cos(a)).toFixed(1),(y+R*Math.sin(a)).toFixed(1)].join(",")}).join(" ");
+    const g=el("g",{class:"hex",tabindex:0,role:"button","aria-label":tile.title});
+    g.append(el("polygon",{points:pts,fill:ty.c}));
+    const tw=Math.max(34,tile.k.length*10+16);
+    g.append(el("rect",{class:"tok",x:x-tw/2,y:y-27,width:tw,height:30,rx:15}));
+    g.append(el("text",{class:"tokt",x,y:y-6.5,"text-anchor":"middle"},tile.k));
+    g.append(el("text",{class:"lbl"+(ty.dark?" dark":""),x,y:y+24,"text-anchor":"middle"},tile.l));
+    g.addEventListener("click",()=>show(idx));
+    g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();show(idx)}});
+    tile.g=g; board.append(g);
+  }
+});
+
+function show(n){
+  sel=n; const t=tiles[n], ty=T[t.t];
+  tiles.forEach((x,k)=>x.g.classList.toggle("sel",k===n));
+  card.innerHTML=`<div class="tag"><i style="background:${ty.c}"></i>${ty.name}</div>
+    <h2>${t.title}</h2><div class="role">${t.role}</div><div class="meta">${t.meta}</div>
+    <p>${t.d}</p>
+    ${t.sl?`<div class="stat"><b>${t.k}</b><span>${t.sl}</span></div>`:""}
+    <div class="chips">${t.chips.map(c=>`<span>${c}</span>`).join("")}</div>
+    ${t.link?`<a class="more" href="${t.link[1]}" target="_blank" rel="noopener">${t.link[0]} →</a>`:""}`;
+}
+Object.entries(T).forEach(([k,v])=>{
+  const b=document.createElement("button");
+  b.innerHTML=`<i style="background:${v.c}"></i>${v.name}`;
+  b.onclick=()=>{filter=filter===k?null:k;
+    [...legend.children].forEach(x=>x.classList.toggle("on",x===b&&filter));
+    tiles.forEach(t=>t.g.classList.toggle("dim",filter&&t.t!==filter));
+    if(filter&&tiles[sel].t!==filter)show(tiles.findIndex(t=>t.t===filter));};
+  legend.append(b);
+});
+show(1);
+</script>
+</body>
+</html>

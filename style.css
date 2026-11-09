@@ -144,3 +144,4 @@ footer{padding:26px 0 50px;font-size:13px;color:var(--ink-2)}
   .ev::before{left:0;top:26px}
   .grid{grid-template-columns:1fr}
 }
+.now img{border-radius:8px;border:2px solid var(--ink);margin-bottom:10px;aspect-ratio:4/3;object-fit:cover;width:100%}

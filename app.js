@@ -64,22 +64,22 @@ const TILES = [
     d: "U.S. market entry for a multinational Indian food brand: competitors, distributors, pricing benchmarks, and whether to contract locally, acquire, or import.",
     sl: "market entry study", chips: ["Market entry", "Excel", "Pricing"] },
 
-  { id: "buzzit", t: "community", k: "300+", l: "BuzzIt", title: "BuzzIt", role: "Consultant, Davis Consulting Group", meta: "Apr – Jun 2025", when: "Apr – Jun 2025",
+  { id: "buzzit", t: "community", k: "300+", l: "BuzzIt", title: "BuzzIt", role: "Consultant, Davis Consulting Group", meta: "Apr – Jun 2026", when: "Apr – Jun 2026",
     d: "A Davis startup building a student-only marketplace for services. Shaped launch features and go-to-market, modeled on student campaigns that had already worked.",
     sl: "first users", chips: ["Go-to-market", "Growth", "Startup"] },
   { id: "prodcon", t: "build", k: "2 days", l: "ProdCon", title: "ProdCon", role: "Lead organizer, Product Space", meta: "Davis, CA · 2026", when: "2026",
     d: "A two-day hackathon: 200+ people, cash prizes, judges and workshops with OpenAI and industry speakers. I led planning across five other student organizations.",
     sl: "200+ attendees, 6 organizations", chips: ["Hackathon", "Logistics", "Partnerships"] },
-  { id: "prizmich", t: "finance", k: "M&A", l: "Lori Prizmich", title: "Lori Prizmich & Associates", role: "Consultant, Davis Consulting Group", meta: "Jan – Mar 2025", when: "Jan – Mar 2025",
+  { id: "prizmich", t: "finance", k: "M&A", l: "Lori Prizmich", title: "Lori Prizmich & Associates", role: "Consultant, Davis Consulting Group", meta: "Jan – Mar 2026", when: "Jan – Mar 2026",
     d: "Supported an M&A transaction for a real estate firm: valued the business from comparable transactions and its own financials, modeled a deal structure, and managed competing interests between the parties.",
     sl: "valuation and deal modeling", chips: ["Valuation", "Comps", "Deal structure"] }
 ];
 
 // Timeline: oldest first. Each stage lists tile ids in order.
 const STAGES = [
-  { name: "First year", sub: "2024 – 25 · finding my footing in consulting, product and student government", ids: ["bsa", "prizmich", "id-fresh", "asucd", "buzzit", "hone"] },
+  { name: "First year", sub: "2024 – 25 · finding my footing in consulting, product and student government", ids: ["bsa", "id-fresh", "asucd", "hone"] },
   { name: "Summer 2025", sub: "Bay Area · a startup, a law firm, AWS and a pitch competition", ids: ["sofi", "neural-net", "dorsal", "aws", "fenwick"] },
-  { name: "Second year", sub: "2025 – 26 · leading teams", ids: ["lci", "ask", "formula", "product-space", "prodcon"] },
+  { name: "Second year", sub: "2025 – 26 · leading teams", ids: ["lci", "ask", "formula", "product-space", "prizmich", "prodcon", "buzzit"] },
   { name: "Summer 2026", sub: "Plano, Texas", ids: ["capital-one"] },
   { name: "Now", sub: "Third year · graduating June 2028", ids: ["dcg"] }
 ];
